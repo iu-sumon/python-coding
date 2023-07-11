@@ -1,0 +1,21 @@
+x = int(1)
+y = int(1.3)
+z = int("3")
+print(x)
+print(y)
+print(z)
+
+x = float(1)
+y = float(1.3)
+z = float("3")
+print(x)
+print(y)
+print(z)
+
+x = str(1)
+y = str(1.3)
+z = str("st")
+print(x)
+print(y)
+print(z)
+

@@ -29,7 +29,7 @@
 x = "awesome"
 
 def myfucn():
-    global x #when any variable declare global keyword. It will be global variable
+    global x #when any variable declare by global keyword. It will be global variable.
     x= "fantastic"
 
 myfucn()
