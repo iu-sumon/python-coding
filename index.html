@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+<style>
+    :root {
+        --select-selected-bg:#d5d5d5;
+    --select-items-bg:#dee2e6;
+    --select-selected-items-color:#131722;
+    }
+    [data-theme="dark"] {
+  --select-selected-bg:#131722;
+  --select-items-bg:#212529;
+  --select-selected-items-color:#ffffff;
+    }
+     /* Add some basic styling for the custom dropdown */
+ .custom-select-dropdown {
+  position: relative;
+  width: 130px;
+} 
+ 
+ 
+
+.select-selected {
+  background-color: var(--select-selected-bg);
+  padding: 6px 10px;
+  border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
+  cursor: pointer;
+  user-select: none;
+}
+ 
+.select-selected:after {
+  position: absolute;
+  content: "";
+  top: 45%;
+  right: 10px;
+  width: 0;
+  height: 0;
+  border: 6px solid transparent;
+  border-color: var(--select-selected-items-color) transparent transparent transparent;
+} 
+
+.select-selected-round {
+  border-radius: 10px 10px 10px 10px;
+}
+
+.select-selected-square {
+  border-radius: 10px 10px 0px 0px;
+} 
+
+.select-items {
+  position: absolute;
+  display: none;
+  width: 130px;
+  height: 150px;
+  overflow-y: auto;
+  background-color: var(--select-items-bg);
+  border-radius: 0px 0px 0px 10px;
+}
+
+.select-items div {
+  padding: 6px 10px;
+  cursor: pointer;
+}
+.select-items div.selected {
+  background-color: #727372;
+  color: var(--select-selected-items-color);
+}
+
+.show-select-items
+{
+  display: block;
+}
+
+/* scrollbar width */
+.select-items::-webkit-scrollbar {
+ width: 10px;
+}
+
+/* scrollbar track */
+.select-items::-webkit-scrollbar-track {
+background:  #c7e3ff;
+border-radius: 0px 0px 10px 0px;
+-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+}
+
+/* scrollbar handle */
+.select-items::-webkit-scrollbar-thumb {
+background: #8ac5ff;
+border-radius: 5px; /* optional rounded handle */
+-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+background-image: -webkit-linear-gradient(45deg rgba(255, 255, 255, .2) 25%,  transparent 25%, transparent 50%, rgba(255, 255, 255, .2) 50%, rgba(255, 255, 255, .2) 75%, transparent 75%, transparent);
+}
+
+/* scrollbar handle on hover */
+.select-items::-webkit-scrollbar-thumb:hover {
+background: #6cb6ff;
+background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, .2) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .2) 50%, rgba(255, 255, 255, .2) 75%, transparent 75%, transparent);
+}
+</style>
+</head>
+<body>
+    <div class="row d-flex align-items-center">
+        <span class="col-2 p-0 pl-3">Last</span>
+        <span class="col-5 p-0">
+          
+          <div class="custom-select-dropdown">
+            <div class="select-selected select-selected-round">N</div>
+            <div class="select-items">
+              <div class="selected">N</div>
+              <div>5</div>
+              <div>7</div>
+              <div>15</div>
+              <div>30</div>
+              <div>60</div>
+              <div>90</div>
+              <div>180</div>
+              <div>270</div>
+              <div>300</div>
+            </div>
+          </div>
+        </span>
+        <span class="col-4 p-0" align="center">Working days</span> 
+    </div>
+    
+    <script>
+        // Get the dropdown elements
+        var customSelect = document.querySelector('.custom-select-dropdown');
+        var selectSelected = customSelect.querySelector('.select-selected');
+        var selectItems = customSelect.querySelector('.select-items').children;
+        
+        // Toggle the dropdown when the select-selected div is clicked
+        selectSelected.addEventListener('click', function() {
+          this.classList.toggle('select-selected-square')
+          customSelect.querySelector('.select-items').classList.toggle('show-select-items');
+        });
+        
+        // Set the selected item when a dropdown item is clicked
+        for (var i = 0; i < selectItems.length; i++) {
+          selectItems[i].addEventListener('click', function() {
+             for (var j = 0; j < selectItems.length; j++) {
+              selectItems[j].classList.remove('selected');
+            }
+            // Add the 'selected' class to the clicked item
+            this.classList.add('selected');
+            selectSelected.classList.remove('select-selected-square');
+            selectSelected.innerHTML = ''
+            selectSelected.innerHTML = this.innerHTML;
+            getSelectedText(this.innerHTML)
+            customSelect.querySelector('.select-items').classList.remove('show-select-items');
+          });
+        }
+        
+        // Close the dropdown if the user clicks outside of it
+        window.addEventListener('click', function(event) { 
+          if (!event.target.matches('.select-selected')) {
+            var dropdowns = document.querySelectorAll('.select-items');
+            for (var i = 0; i < dropdowns.length; i++) {
+              var dropdown = dropdowns[i];
+              if (dropdown.classList.contains('show-select-items')) {
+                 dropdown.classList.remove('show-select-items');
+                 selectSelected.classList.remove('select-selected-square');
+              }
+            }
+          }
+        });
+        
+        function getSelectedText(text)
+        {
+          console.log(text)
+        }
+        </script>
+</body>
+</html>
